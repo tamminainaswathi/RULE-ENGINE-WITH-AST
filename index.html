@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rule Engine</title>
+    <script>
+        async function createRule() {
+            const rule = document.getElementById('rule').value;
+            const response = await fetch('/create_rule', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rule: rule })
+            });
+            const result = await response.json();
+            console.log("AST:", result);
+            alert("Rule created! Check the console for AST details.");
+        }
+
+        async function evaluateRule() {
+            const data = { age: 35, department: "Sales", salary: 60000, experience: 3 };
+            const response = await fetch('/evaluate_rule', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: data })
+            });
+            const result = await response.json();
+            console.log("Evaluation Result:", result);
+            alert("Rule evaluated! Check the console for results.");
+        }
+    </script>
+</head>
+<body>
+    <h1>Rule Engine</h1>
+    <input type="text" id="rule" placeholder="Enter Rule" />
+    <button onclick="createRule()">Create Rule</button>
+    <button onclick="evaluateRule()">Evaluate Rule</button>
+</body>
+</html>
